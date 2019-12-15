@@ -3,7 +3,9 @@ import sqlite3
 from sqlite3 import Error
 import requests
 from flask import Flask, render_template, request, redirect, session, flash, url_for, g, jsonify
-
+import os
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+book_db = os.path.join(THIS_FOLDER, 'book.db')
 
 app = Flask(__name__)
 
@@ -15,7 +17,7 @@ def login():
         password = request.form['password']
         error = None
         
-        conn = sqlite3.connect(r'D:\Coding Projects\IS211_CourseProject\book.db')
+        conn = sqlite3.connect(book_db)
         with conn:
             cur = conn.cursor()
 
@@ -53,7 +55,7 @@ def register():
         password = request.form['password']
         error = None
         
-        conn = sqlite3.connect(r'D:\Coding Projects\IS211_CourseProject\book.db')
+        conn = sqlite3.connect(book_db)
         with conn:
             cur = conn.cursor()
 
@@ -88,7 +90,7 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    conn = sqlite3.connect(r'D:\Coding Projects\IS211_CourseProject\book.db')
+    conn = sqlite3.connect(book_db)
     user = session.get('account_id')
     with conn:
         cur = conn.cursor()
@@ -111,7 +113,7 @@ def remove_book():
         book_del = request.form['book_id']
         user = session.get('account_id')
 
-        conn = sqlite3.connect(r'D:\Coding Projects\IS211_CourseProject\book.db')
+        conn = sqlite3.connect(book_db)
         cur = conn.cursor()
         with conn:
             try:
@@ -193,7 +195,7 @@ def add_book():
                     book['thumbnail'] = 'https://user-images.githubusercontent.com/101482/29592647-40da86ca-875a-11e7-8bc3-941700b0a323.png'
 
         if not error:
-            conn = sqlite3.connect(r'D:\Coding Projects\IS211_CourseProject\book.db')
+            conn = sqlite3.connect(book_db)
             cur = conn.cursor()
             user = session.get('account_id')
             with conn:

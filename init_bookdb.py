@@ -1,5 +1,9 @@
 import sqlite3
 from sqlite3 import Error
+import os
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+book_db = os.path.join(THIS_FOLDER, 'book.db')
+book_schema = os.path.join(THIS_FOLDER, 'schema.sql')
 
 def create_connection(db_file):
     conn = None
@@ -42,5 +46,5 @@ def load_table(db_file):
         cur.execute("INSERT INTO books_accounts VALUES(?,?)", books_accounts)
 
 if __name__ == '__main__':
-    create_connection(r'D:\Coding Projects\IS211_CourseProject\book.db')
-    define_table(r'D:\Coding Projects\IS211_CourseProject\book.db', r'D:\Coding Projects\IS211_CourseProject\schema.sql')
+    create_connection(book_db)
+    define_table(book_db, book_schema)
