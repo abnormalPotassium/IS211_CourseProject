@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Add Books to Your List{% endblock %}</h1>
+  <ul style="list-style-type:none;"l>
+      <li><a href="{{ url_for('dashboard') }}">Book List</a></li>
+  </ul>
+{% endblock %}
+
+{% block content %}
+    <form action="/add_book" method="post">
+        Book ISBN: <input type="text" name="book_isbn"></input>
+        <p>or<br /></p>
+        Book Title: <input type="text" name="book_title"></input><br/>
+        <input type="submit" value="Add Book">
+    </form>
+{% endblock %}
