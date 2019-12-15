@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-  {% if book_list == None %}
+  {% if not book_list %}
     <h2>No Books</h2>
   {% else %}
     <table>

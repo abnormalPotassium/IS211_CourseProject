@@ -137,12 +137,7 @@ def add_book():
                 error = 'Please enter a valid ISBN.'
             else:
                 book_data = requests.get(f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}')
-                print(book_data)
                 book_json = dict(book_data.json())
-                print(book_json)
-                print(type(book_json))
-                print(isbn)
-                print(title)
 
                 if book_json['totalItems'] == 0:
                     error = 'This ISBN doesn\'t seem to be linked to a book.'
@@ -150,29 +145,22 @@ def add_book():
                     book = {}
                     try:
                         book['title'] = book_json['items'][0]['volumeInfo']['title']
-                        print(book)
                     except:
                         book['title'] = None
                     try:
                         book['author'] = book_json['items'][0]['volumeInfo']['authors'][0]
-                        print(book)
                     except:
                         book['author'] = None
                     try:
                         book['pages'] = book_json['items'][0]['volumeInfo']['pageCount']
-                        print(book)
                     except:
                         book['pages'] = None
                     try:
                         book['rating'] = book_json['items'][0]['volumeInfo']['averageRating']
-                        print(book)
                     except:
                         book['rating'] = None
                     try:
                         book['thumbnail'] = book_json['items'][0]['volumeInfo']['imageLinks']['thumbnail']
-                        print(book)
-                        print(type(book))
-                        print(error)
                     except:
                         book['thumbnail'] = 'https://user-images.githubusercontent.com/101482/29592647-40da86ca-875a-11e7-8bc3-941700b0a323.png'
         else:
@@ -208,7 +196,6 @@ def add_book():
             conn = sqlite3.connect(r'D:\Coding Projects\IS211_CourseProject\book.db')
             cur = conn.cursor()
             user = session.get('account_id')
-            print(user)
             with conn:
                 try:
                     cur.execute("INSERT INTO books VALUES(null,?,?,?,?,?)", list(book.values()))
